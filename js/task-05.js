@@ -5,9 +5,7 @@ const nameEl = document.getElementById("name-output");
 
 inputEl.addEventListener("input", (event) => {
     console.log(event.currentTarget.value);
-    if (event.currentTarget.value !== "") {
-        nameEl.textContent = event.currentTarget.value
-    }
-    else { nameEl.textContent = 'Anonymous';}
+    nameEl.textContent = event.currentTarget.value !== "" ?
+        event.currentTarget.value : 'Anonymous';
     
 })
