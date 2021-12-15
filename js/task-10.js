@@ -1,33 +1,55 @@
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
-const controlsEl = document.querySelector('#controls');
-const inputEl = controlsEl.querySelector('input');
-const btnCreate = controlsEl.querySelector('button[data-create]');
-const btnDestroy = controlsEl.querySelector('button[data-destroy]');
+const refs = {
+  controlsEl: document.querySelector('#controls'),
+  boxesEl : document.querySelector('#boxes'),
+}
 
-inputEl.addEventListener('change', onInputElClick);
-btnCreate.addEventListener('click', onBtnCreateClick);
-btnDestroy.addEventListener('click', onBtnDestroyClick);
+refs.controlsEl.addEventListener('click', onButtonClick)
 
-function onInputElClick(ent) {
-  
-  console.log(ent.currentTarget.value);
-};
-
-// customer.getFullName.bind(customer)
-function onBtnCreateClick() {
-  let i;
-  for (i = 1; i <= inputEl.onInputElClick(); i += 1) {
-    const newBox = document.createElement("div")
-    console.log(newBox)
-
+function onButtonClick ( e ) {
+  if ( e.target.nodeName !== 'BUTTON' ) {
+    return
   }
+  let valueInput = refs.controlsEl.firstElementChild.value
+
+  if ( e.target.textContent == "Create" ) {
+    createBoxes(valueInput)
+  }
+
+  else if ( e.target.textContent == "Destroy" ) {
+    destroyBoxes()
+  }
+}
+
+
+function createBoxes(amount) {
+  let i;
+  let width = 30;
+  let height = 30;
+  let step = 10;
+  const boxElements = [];
+
+  for (i = 1; i <= amount; i += 1) {
+    const boxEl = document.createElement('div');
+    boxEl.classList.add('box')
+    boxEl.style.width = `${width+(i-1)*step}px`
+    boxEl.style.height = `${height+(i-1)*step}px`
+    boxEl.style.backgroundColor = `${getRandomHexColor()}`
+    boxElements.push(boxEl)
+  }
+  refs.boxesEl.append(...boxElements);
+  console.log(`Create ${amount} boxes`)
+  
+}
+
+function destroyBoxes() {
+  const boxEl = document.querySelectorAll('.box');
+    boxEl.forEach(element => {
+    element.remove()
+    });
+  console.log(`Destroy ${boxEl.length} boxes`)
 };
 
 
-
-
-function onBtnDestroyClick() {
- 
-};
